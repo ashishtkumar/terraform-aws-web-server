@@ -80,10 +80,6 @@ resource "aws_route_table_association" "hashiapp" {
 
 data "aws_ami" "centbase" {
   filter {
-    name   = "product-code"
-    values = ["aw0evgkw8e5c1q413zgy5pjce"]
-  }
-  filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
