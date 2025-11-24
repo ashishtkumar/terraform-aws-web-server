@@ -107,7 +107,6 @@ resource "aws_instance" "hashiapp" {
 
 resource "aws_eip" "hashiapp" {
   instance = aws_instance.hashiapp.id
-  vpc      = true
 }
 
 resource "aws_eip_association" "hashiapp" {
