@@ -1,0 +1,129 @@
+import "strings"
+import "types"
+
+outputs = {}
+
+_modules = {
+	"root": {
+		"data": {
+			"aws_ami": {
+				"centbase": {
+					0: {
+						"attr": {
+							"allow_unsafe_filter": null,
+							"architecture":        "x86_64",
+							"arn":                 "arn:aws:ec2:eu-west-1::image/ami-0dc25db234082bce8",
+							"block_device_mappings": [
+								{
+									"device_name": "/dev/xvda",
+									"ebs": {
+										"delete_on_termination":      "true",
+										"encrypted":                  "false",
+										"iops":                       "0",
+										"snapshot_id":                "snap-0c41199111ad5a7f0",
+										"throughput":                 "0",
+										"volume_initialization_rate": "0",
+										"volume_size":                "10",
+										"volume_type":                "gp2",
+									},
+									"no_device":    "",
+									"virtual_name": "",
+								},
+							],
+							"boot_mode":        "",
+							"creation_date":    "2025-11-24T00:49:52.000Z",
+							"deprecation_time": "2027-11-24T00:49:52.000Z",
+							"description":      "",
+							"ena_support":      true,
+							"executable_users": null,
+							"filter": [
+								{
+									"name": "virtualization-type",
+									"values": [
+										"hvm",
+									],
+								},
+							],
+							"hypervisor":         "xen",
+							"id":                 "ami-0dc25db234082bce8",
+							"image_id":           "ami-0dc25db234082bce8",
+							"image_location":     "aws-marketplace/bitnami-jupyterhub-5.4.2-r01-debian-12-amd64-f3674770-16eb-4ba9-bd18-05dadf4477f3",
+							"image_owner_alias":  "aws-marketplace",
+							"image_type":         "machine",
+							"imds_support":       "",
+							"include_deprecated": false,
+							"kernel_id":          "",
+							"last_launched_time": "",
+							"most_recent":        true,
+							"name":               "bitnami-jupyterhub-5.4.2-r01-debian-12-amd64-f3674770-16eb-4ba9-bd18-05dadf4477f3",
+							"name_regex":         null,
+							"owner_id":           "679593333241",
+							"owners": [
+								"679593333241",
+							],
+							"platform":         "",
+							"platform_details": "Linux/UNIX",
+							"product_codes": [
+								{
+									"product_code_id":   "eergc48g00h4cfipk7dvmwlpv",
+									"product_code_type": "marketplace",
+								},
+							],
+							"public":            true,
+							"ramdisk_id":        "",
+							"region":            "eu-west-1",
+							"root_device_name":  "/dev/xvda",
+							"root_device_type":  "ebs",
+							"root_snapshot_id":  "snap-0c41199111ad5a7f0",
+							"sriov_net_support": "simple",
+							"state":             "available",
+							"state_reason": {
+								"code":    "UNSET",
+								"message": "UNSET",
+							},
+							"tags":                {},
+							"timeouts":            null,
+							"tpm_support":         "",
+							"uefi_data":           null,
+							"usage_operation":     "RunInstances",
+							"virtualization_type": "hvm",
+						},
+						"depends_on": [],
+						"id":         "ami-0dc25db234082bce8",
+						"tainted":    false,
+					},
+				},
+			},
+		},
+		"path":      [],
+		"resources": {},
+	},
+}
+
+module_paths = [
+	[],
+]
+
+terraform_version = "1.14.0"
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+path = _modules.root.path
+resources = _modules.root.resources

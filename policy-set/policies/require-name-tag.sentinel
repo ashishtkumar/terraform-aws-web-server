@@ -1,0 +1,16 @@
+import "tfplan/v2" as tfplan
+
+# Grab only resource changes for aws_instance that are create or update
+instances = filter tfplan.resource_changes as rc {
+    rc.type is "aws_instance" and
+    (rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+# Ensure each changed instance has a non-empty Name tag after change
+all_have_name_tag = all instances as inst {
+    let after = inst.change.after else {};
+    let tags  = after.tags else {};
+    tags contains "Name" and length(tags["Name"]) > 0
+}
+
+main = rule { all_have_name_tag }

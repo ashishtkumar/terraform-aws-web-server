@@ -1,0 +1,456 @@
+import "strings"
+
+providers = {
+	"aws": {
+		"alias": "",
+		"config": {
+			"region": {
+				"constant_value": "eu-west-1",
+			},
+		},
+		"full_name":           "registry.terraform.io/hashicorp/aws",
+		"module_address":      "",
+		"name":                "aws",
+		"provider_config_key": "aws",
+		"version_constraint":  "",
+	},
+}
+
+resources = {
+	"aws_eip.hashiapp": {
+		"address": "aws_eip.hashiapp",
+		"config": {
+			"instance": {
+				"references": [
+					"aws_instance.hashiapp.id",
+					"aws_instance.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_eip",
+	},
+	"aws_eip_association.hashiapp": {
+		"address": "aws_eip_association.hashiapp",
+		"config": {
+			"allocation_id": {
+				"references": [
+					"aws_eip.hashiapp.id",
+					"aws_eip.hashiapp",
+				],
+			},
+			"instance_id": {
+				"references": [
+					"aws_instance.hashiapp.id",
+					"aws_instance.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_eip_association",
+	},
+	"aws_instance.hashiapp": {
+		"address": "aws_instance.hashiapp",
+		"config": {
+			"ami": {
+				"references": [
+					"data.aws_ami.centbase.id",
+					"data.aws_ami.centbase",
+				],
+			},
+			"associate_public_ip_address": {
+				"constant_value": true,
+			},
+			"instance_type": {
+				"references": [
+					"var.instance_type",
+				],
+			},
+			"key_name": {
+				"references": [
+					"var.key_name",
+				],
+			},
+			"subnet_id": {
+				"references": [
+					"aws_subnet.hashiapp.id",
+					"aws_subnet.hashiapp",
+				],
+			},
+			"tags": {
+				"references": [
+					"var.prefix",
+				],
+			},
+			"vpc_security_group_ids": {
+				"references": [
+					"aws_security_group.hashiapp.id",
+					"aws_security_group.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_instance",
+	},
+	"aws_internet_gateway.hashiapp": {
+		"address": "aws_internet_gateway.hashiapp",
+		"config": {
+			"tags": {
+				"references": [
+					"var.prefix",
+				],
+			},
+			"vpc_id": {
+				"references": [
+					"aws_vpc.hashiapp.id",
+					"aws_vpc.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_internet_gateway",
+	},
+	"aws_route_table.hashiapp": {
+		"address": "aws_route_table.hashiapp",
+		"config": {
+			"route": {
+				"references": [
+					"aws_internet_gateway.hashiapp.id",
+					"aws_internet_gateway.hashiapp",
+				],
+			},
+			"vpc_id": {
+				"references": [
+					"aws_vpc.hashiapp.id",
+					"aws_vpc.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_route_table",
+	},
+	"aws_route_table_association.hashiapp": {
+		"address": "aws_route_table_association.hashiapp",
+		"config": {
+			"route_table_id": {
+				"references": [
+					"aws_route_table.hashiapp.id",
+					"aws_route_table.hashiapp",
+				],
+			},
+			"subnet_id": {
+				"references": [
+					"aws_subnet.hashiapp.id",
+					"aws_subnet.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_route_table_association",
+	},
+	"aws_security_group.hashiapp": {
+		"address": "aws_security_group.hashiapp",
+		"config": {
+			"egress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        0,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  [],
+						"protocol":         "-1",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          0,
+					},
+				],
+			},
+			"ingress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        22,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "tcp",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          22,
+					},
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        80,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "tcp",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          80,
+					},
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        443,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "tcp",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          443,
+					},
+				],
+			},
+			"name": {
+				"references": [
+					"var.prefix",
+				],
+			},
+			"tags": {
+				"references": [
+					"var.prefix",
+				],
+			},
+			"vpc_id": {
+				"references": [
+					"aws_vpc.hashiapp.id",
+					"aws_vpc.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_security_group",
+	},
+	"aws_subnet.hashiapp": {
+		"address": "aws_subnet.hashiapp",
+		"config": {
+			"cidr_block": {
+				"references": [
+					"var.subnet_prefix",
+				],
+			},
+			"tags": {
+				"references": [
+					"var.prefix",
+				],
+			},
+			"vpc_id": {
+				"references": [
+					"aws_vpc.hashiapp.id",
+					"aws_vpc.hashiapp",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_subnet",
+	},
+	"aws_vpc.hashiapp": {
+		"address": "aws_vpc.hashiapp",
+		"config": {
+			"cidr_block": {
+				"references": [
+					"var.address_space",
+				],
+			},
+			"enable_dns_hostnames": {
+				"constant_value": true,
+			},
+			"tags": {
+				"references": [
+					"var.prefix",
+					"var.region",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "hashiapp",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_vpc",
+	},
+	"data.aws_ami.centbase": {
+		"address": "data.aws_ami.centbase",
+		"config": {
+			"filter": [
+				{
+					"name": {
+						"constant_value": "virtualization-type",
+					},
+					"values": {
+						"constant_value": [
+							"hvm",
+						],
+					},
+				},
+			],
+			"most_recent": {
+				"constant_value": true,
+			},
+			"owners": {
+				"constant_value": [
+					"679593333241",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "",
+		"name":                "centbase",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_ami",
+	},
+}
+
+provisioners = {}
+
+variables = {
+	"address_space": {
+		"default":        "10.0.0.0/16",
+		"description":    "The address space that is used by the virtual network. You can supply more than one address space. Changing this forces a new resource to be created.",
+		"module_address": "",
+		"name":           "address_space",
+	},
+	"instance_type": {
+		"default":        "t2.micro",
+		"description":    "Specifies the AWS instance type.",
+		"module_address": "",
+		"name":           "instance_type",
+	},
+	"key_name": {
+		"default":        "ruddy-packer-demo",
+		"description":    "The key name of the Key Pair to use for the instance",
+		"module_address": "",
+		"name":           "key_name",
+	},
+	"prefix": {
+		"default":        "ruddy",
+		"description":    "This prefix will be included in the name of most resources.",
+		"module_address": "",
+		"name":           "prefix",
+	},
+	"region": {
+		"default":        "eu-central-1",
+		"description":    "The region where the resources are created.",
+		"module_address": "",
+		"name":           "region",
+	},
+	"subnet_prefix": {
+		"default":        "10.0.10.0/24",
+		"description":    "The address prefix to use for the subnet.",
+		"module_address": "",
+		"name":           "subnet_prefix",
+	},
+}
+
+outputs = {
+	"public_dns": {
+		"depends_on":     [],
+		"description":    "",
+		"module_address": "",
+		"name":           "public_dns",
+		"sensitive":      false,
+		"value": {
+			"references": [
+				"aws_eip.hashiapp.public_dns",
+				"aws_eip.hashiapp",
+			],
+		},
+	},
+	"public_ip": {
+		"depends_on":     [],
+		"description":    "",
+		"module_address": "",
+		"name":           "public_ip",
+		"sensitive":      false,
+		"value": {
+			"references": [
+				"aws_eip.hashiapp.public_ip",
+				"aws_eip.hashiapp",
+			],
+		},
+	},
+}
+
+module_calls = {}
+
+strip_index = func(addr) {
+	s = strings.split(addr, ".")
+	for s as i, v {
+		s[i] = strings.split(v, "[")[0]
+	}
+
+	return strings.join(s, ".")
+}
