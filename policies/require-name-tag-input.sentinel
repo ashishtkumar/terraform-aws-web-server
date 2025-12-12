@@ -1,0 +1,10 @@
+import "input"
+
+instances = input.instances
+
+all_have_name_tag = all instances as inst {
+  inst.tags contains "Name" and
+  length(inst.tags["Name"]) > 0
+}
+
+main = rule { all_have_name_tag }

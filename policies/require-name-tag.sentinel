@@ -1,0 +1,13 @@
+import "tfplan/v2" as tfplan
+
+instances = filter tfplan.resource_changes as rc {
+  rc.type is "aws_instance" and
+  (rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+all_have_name_tag = all instances as inst {
+  inst.change.after.tags contains "Name" and
+  length(inst.change.after.tags["Name"]) > 0
+}
+
+main = rule { all_have_name_tag }
