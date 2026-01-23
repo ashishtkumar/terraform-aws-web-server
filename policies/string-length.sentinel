@@ -1,5 +1,0 @@
-import "input"
-
-main = rule {
-  length(input.mystring) >= 5
-}
