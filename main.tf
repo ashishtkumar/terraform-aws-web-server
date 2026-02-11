@@ -3,7 +3,7 @@ resource "aws_vpc" "hashiapp" {
   enable_dns_hostnames = true
 
   tags = {
-    name        = "${var.prefix}-vpc-${var.region}"
+    Name        = "${var.prefix}-vpc-${var.region}"
     environment = "Production"
   }
 }
@@ -13,7 +13,7 @@ resource "aws_subnet" "hashiapp" {
   cidr_block = var.subnet_prefix
 
   tags = {
-    name = "${var.prefix}-subnet"
+    Name = "${var.prefix}-subnet"
   }
 }
 
@@ -80,7 +80,7 @@ resource "aws_route_table_association" "hashiapp" {
 
 data "aws_ami" "centbase" {
   filter {
-    name   = "virtualization-type"
+    Name   = "virtualization-type"
     values = ["hvm"]
   }
 
