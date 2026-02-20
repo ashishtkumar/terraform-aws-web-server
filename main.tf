@@ -80,7 +80,7 @@ resource "aws_route_table_association" "hashiapp" {
 
 data "aws_ami" "centbase" {
   filter {
-    Name   = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 
